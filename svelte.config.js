@@ -3,7 +3,7 @@ import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 import { mdsvex } from 'mdsvex';
 import { fileURLToPath } from 'node:url';
 
-const runbook = fileURLToPath(new URL('./src/lib/layouts/runbook.svelte', import.meta.url));
+const runbook = fileURLToPath(new URL('./apps/kb/lib/layouts/runbook.svelte', import.meta.url));
 
 /** @type {import('@sveltejs/kit').Config} */
 export default {
@@ -14,7 +14,8 @@ export default {
   ],
   kit: {
     adapter: adapter({ pages: 'build', assets: 'build', strict: false }),
-    alias: { '#lib': 'src/lib' },
+    alias: { '#lib': 'apps/kb/lib' },
+    files: { routes: 'apps/kb/routes', lib: 'apps/kb/lib', appTemplate: 'apps/kb/app.html' },
     prerender: { entries: ['/kb'], handleHttpError: 'warn' },
   },
 };
