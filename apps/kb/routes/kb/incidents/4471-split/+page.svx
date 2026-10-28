@@ -4,7 +4,7 @@ title: '#4471 is three problems, not one'
 owner: Ivan Davidov
 status: open
 reviewed: 2026-10-28
-signature: idavidov13
+signature: v1.eyJzdWIiOiIyMDI2IiwiYXVkIjoiY2hhbGxlbmdlOndoYXQtaXQtc2hvd3MiLCJpYXQiOjE3OTMxODU1NDEsImV4cCI6MTc5MzI3MTk0MX0.K9THfcvH4wnR_e42yu5m-jkvQMk0I3u_-5WcJ3qAVRM
 ---
 
 <script>
