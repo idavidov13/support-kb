@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="../../_app/immutable/entry/start.qCu5WzXq.js" rel="modulepreload">
+		<link href="../../_app/immutable/chunks/DnoyNMba.js" rel="modulepreload">
+		<link href="../../_app/immutable/chunks/DQiYlk2b.js" rel="modulepreload">
+		<link href="../../_app/immutable/chunks/DXhvxdpI.js" rel="modulepreload">
+		<link href="../../_app/immutable/entry/app.C4305nSX.js" rel="modulepreload">
+		<link href="../../_app/immutable/chunks/4HIIzLmj.js" rel="modulepreload">
+		<link href="../../_app/immutable/chunks/B4WlwwdY.js" rel="modulepreload">
+		<link href="../../_app/immutable/chunks/CGyox8To.js" rel="modulepreload">
+		<link href="../../_app/immutable/chunks/gCpT5-Oq.js" rel="modulepreload">
+		<link href="../../_app/immutable/nodes/0.BGnV4s9O.js" rel="modulepreload">
+		<link href="../../_app/immutable/chunks/BHsyMl1J.js" rel="modulepreload">
+		<link href="../../_app/immutable/nodes/5.CzEbCIVJ.js" rel="modulepreload">
+		<link href="../../_app/immutable/chunks/D79ZPH-5.js" rel="modulepreload">
+		<link href="../../_app/immutable/chunks/BMg7KjJ0.js" rel="modulepreload">
+		<link href="../../_app/immutable/chunks/DR7RVcJr.js" rel="modulepreload">
+		<link href="../../_app/immutable/chunks/BsPnvk72.js" rel="modulepreload">
+		<!--e2jw2j--><!----><title>#4471 is three problems, not one · support kb</title>
+		<link href="../../_app/immutable/assets/runbook.BhhgOc_n.css" rel="stylesheet">
+		<link href="../../_app/immutable/assets/Callout.yLErXQDM.css" rel="stylesheet">
+		<link href="../../_app/immutable/assets/CauseTable.DuKfINX_.css" rel="stylesheet">
+		<link href="../../_app/immutable/assets/5.Sgx10T1v.css" rel="stylesheet">
+  </head>
+  <body>
+    <div style="display: contents"><!--[--><!--[0--><!--[--><!--[--><div class="kb svelte-e2jw2j"><header><a class="crumb svelte-e2jw2j" href="/kb">support desk · kb</a> <h1 class="svelte-e2jw2j">#4471 is three problems, not one</h1> <p class="meta svelte-e2jw2j"><span>owner <b>Ivan Davidov</b></span> <span class="status open svelte-e2jw2j">open</span> <span class="svelte-e2jw2j">reviewed 2026-10-28 · 0 days ago</span></p></header> <!--[-1--><!--]--> <main><p><a href="/kb/incidents/4471">#4471</a> was marked known: one issue, one fix. Its reports say otherwise.
+They were merged on subject line alone (<a href="/kb/decisions/0001-dedupe-by-subject">decision 0001</a>), and
+“wrong date” has more than one cause. Each problem below has its own ticket, with the
+reports it covers.</p> <p>Engineering closed #4471 on 5 October:</p> <ul><li><strong><code>parser</code></strong>: fixed (<code>fix(dates): parse dd/mm for eu locales</code>). Ticket closed as completed.</li> <li><strong><code>hint</code></strong>: won’t fix; the booking-v3 form is retired. Ticket closed as not planned.</li> <li><strong><code>shift</code></strong>: not in the update. Its ticket stays open.</li></ul> <aside class="warn svelte-17bri61"><!---->Closing #4471 did not close every problem in it. The one-day shift is still live.<!----></aside><!----> <h2>The problems</h2> <p class="sum svelte-1op6c6"><strong>412</strong> unique reports in the export · <strong>412</strong> merged into #4471 · <strong>3</strong> problems</p> <table><thead><tr><th>problem</th><th>reports</th><th>tenants</th><th>seen</th><th>ticket</th></tr></thead><tbody><!--[--><tr><td><code>parser</code></td><td>374</td><td>11</td><td>2026-04-01 → 2026-10-04</td><td><!--[0--><a href="https://github.com/idavidov13/support-kb/issues/1">#1</a><!--]--></td></tr><tr><td><code>hint</code></td><td>33</td><td>3</td><td>2026-04-17 → 2026-09-22</td><td><!--[0--><a href="https://github.com/idavidov13/support-kb/issues/2">#2</a><!--]--></td></tr><tr><td><code>shift</code></td><td>5</td><td>5</td><td>2026-04-02 → 2026-10-04</td><td><!--[0--><a href="https://github.com/idavidov13/support-kb/issues/3">#3</a><!--]--></td></tr><!--]--></tbody><tfoot class="svelte-1op6c6"><tr><td class="svelte-1op6c6">total</td><td class="svelte-1op6c6">412</td><td colspan="3" class="svelte-1op6c6"></td></tr></tfoot></table><!----> <ul><li><strong><code>parser</code></strong>: the shared parser reads dates month first; every tenant on file writes the
+day first, so day and month swap. Every app and email report, and form reports from
+booking-v2 tenants.</li> <li><strong><code>hint</code></strong>: booking-v3’s form prints <code>MM/DD/YYYY</code> under the date field. People follow the
+hint, and the form reads what they typed day first. Only form reports from booking-v3 tenants.
+The parser fix does not touch this; retiring the form ends it.</li> <li><strong><code>shift</code></strong>: the date moves one day earlier, weekday and all; the month never swaps. The
+desk spotted these (<code>desk-notes.json</code>) but filed them under <code>parser</code> by tenant. It looks
+like timezone handling: one meeting showed Tuesday in Lisbon and Monday in Toronto.</li></ul> <h2>How each report is placed</h2> <p>By where it came from, not by what intake guessed. Intake’s <code>parser</code>/<code>hint</code> tag comes from the
+reporter’s browser, and the tenant decides the cause (<code>src/lib/kb/causes.ts</code>). The desk’s
+reading of a report as a one-day move comes first, so no report counts twice
+(<code>src/lib/kb/problems.ts</code>). The export repeats some reports across pages; each id counts once.</p> <p>The table on #4471, for comparison: the same reports grouped by tenant cause only, with the
+one-day moves still inside <code>parser</code>.</p> <p class="sum svelte-12oyimm"><strong>412</strong> reports merged into #4471 · <strong>2</strong> causes</p> <table><thead><tr><th>cause</th><th>reports</th><th>tagged as</th><th>tenants</th><th>seen</th><th></th></tr></thead><tbody><!--[--><tr class="svelte-12oyimm"><td class="svelte-12oyimm"><code>parser</code></td><td class="svelte-12oyimm">379</td><td class="tags svelte-12oyimm">parser ×356 · hint ×23</td><td class="svelte-12oyimm">11</td><td class="svelte-12oyimm">2026-04-01 → 2026-10-04</td><td class="svelte-12oyimm">#4471</td></tr><tr class="svelte-12oyimm wrong"><td class="svelte-12oyimm"><code>hint</code></td><td class="svelte-12oyimm">33</td><td class="tags svelte-12oyimm">hint ×18 · parser ×15</td><td class="svelte-12oyimm">3</td><td class="svelte-12oyimm">2026-04-17 → 2026-09-22</td><td class="svelte-12oyimm">not this ticket — no ticket of its own</td></tr><!--]--></tbody></table> <!--[--><!--[0--><p class="note svelte-12oyimm">5 reports read as a one-day move; filed under <code>parser</code> by tenant.</p><!--]--><!--[-1--><!--]--><!--]--><!----> <h2>What changes on the desk</h2> <ul><li>A new one-day-shift report goes to the <code>shift</code> ticket, not to #4471.</li> <li>A wrong-date report gets placed by tenant, channel and form before it is merged. A shared
+subject line is not a shared cause.</li></ul> <!--[0--><p class="stamp svelte-1280m42">desk ref <b class="svelte-1280m42">DR-BD0V-ADM2</b></p><!--]--><!----><!----></main> <footer class="svelte-e2jw2j">Pages are written by people. Tables and charts are built from data at render time.</footer></div><!--]--><!----><!--]--><!--]--> <!--[-1--><!--]--><!--]-->
+			
+			<script>
+				{
+					__sveltekit_1uil2aj = {
+						base: new URL("../..", location).pathname.slice(0, -1)
+					};
+
+					const element = document.currentScript.parentElement;
+
+					Promise.all([
+						import("../../_app/immutable/entry/start.qCu5WzXq.js"),
+						import("../../_app/immutable/entry/app.C4305nSX.js")
+					]).then(([kit, app]) => {
+						kit.start(app, element, {
+							node_ids: [0, 5],
+							data: [null,null],
+							form: null,
+							error: null
+						});
+					});
+				}
+			</script>
+		</div>
+  </body>
+</html>

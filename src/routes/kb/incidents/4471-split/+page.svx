@@ -2,7 +2,7 @@
 layout: runbook
 title: '#4471 is three problems, not one'
 owner: Ivan Davidov
-status: proposed
+status: open
 reviewed: 2026-10-28
 signature: Ivan Davidov
 ---
@@ -20,13 +20,19 @@ signature: Ivan Davidov
   };
 </script>
 
-[#4471](/kb/incidents/4471) is marked known: one issue, one fix queued. Its reports say otherwise.
+[#4471](/kb/incidents/4471) was marked known: one issue, one fix. Its reports say otherwise.
 They were merged on subject line alone ([decision 0001](/kb/decisions/0001-dedupe-by-subject)), and
-"wrong date" has more than one cause. Each problem below now has its own ticket, with the
+"wrong date" has more than one cause. Each problem below has its own ticket, with the
 reports it covers.
 
+Engineering closed #4471 on 5 October:
+
+- **`parser`**: fixed (`fix(dates): parse dd/mm for eu locales`). Ticket closed as completed.
+- **`hint`**: won't fix; the booking-v3 form is retired. Ticket closed as not planned.
+- **`shift`**: not in the update. Its ticket stays open.
+
 <Callout kind="warn">
-The queued parser fix closes only the first row. The other two stay broken after it ships.
+Closing #4471 did not close every problem in it. The one-day shift is still live.
 </Callout>
 
 ## The problems
@@ -38,7 +44,7 @@ The queued parser fix closes only the first row. The other two stay broken after
   booking-v2 tenants.
 - **`hint`**: booking-v3's form prints `MM/DD/YYYY` under the date field. People follow the
   hint, and the form reads what they typed day first. Only form reports from booking-v3 tenants.
-  Fixing the parser does not touch this.
+  The parser fix does not touch this; retiring the form ends it.
 - **`shift`**: the date moves one day earlier, weekday and all; the month never swaps. The
   desk spotted these (`desk-notes.json`) but filed them under `parser` by tenant. It looks
   like timezone handling: one meeting showed Tuesday in Lisbon and Monday in Toronto.
@@ -57,7 +63,7 @@ one-day moves still inside `parser`.
 
 ## What changes on the desk
 
-- #4471 stays open for `parser` only; its count drops to the `parser` row above.
+- A new one-day-shift report goes to the `shift` ticket, not to #4471.
 - A wrong-date report gets placed by tenant, channel and form before it is merged. A shared
   subject line is not a shared cause.
 
